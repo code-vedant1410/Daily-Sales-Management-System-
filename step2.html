@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step 2 - Totals</title>
+    <!-- Link to your separate CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Step 2: Enter Totals</h1>
+      <div class="form-row">
+        <input type="number" id="upiInput" placeholder="Total UPI ₹" />
+        <input
+          type="number"
+          id="openingInput"
+          placeholder="Opening Balance ₹"
+        />
+        <!-- ✅ NEW Plus Money input -->
+        <input type="number" id="plusMoneyInput" placeholder="Plus Money ₹" />
+        <button id="generateBtn">📌 Generate Report</button>
+      </div>
+
+      <!-- Sales Table -->
+      <div id="salesSection" style="display: none; margin-top: 20px">
+        <h2>🛒 Sales Items</h2>
+        <table id="salesTable">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Item Name</th>
+              <th>Sale Amount ₹</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2"><strong>Total</strong></td>
+              <td id="salesTotal">0.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Report Section -->
+      <div id="report" class="report" style="display: none; margin-top: 20px">
+        <h2>📋 Today’s Report</h2>
+        <p><strong>Total Sales:</strong> ₹<span id="rTotal"></span></p>
+        <p><strong>UPI:</strong> ₹<span id="rUpi"></span></p>
+        <p><strong>Cash:</strong> ₹<span id="rCash"></span></p>
+        <p><strong>Opening Balance:</strong> ₹<span id="rOpening"></span></p>
+        <!-- ✅ NEW Plus Money line in report -->
+        <p><strong>Plus Money:</strong> ₹<span id="rPlusMoney"></span></p>
+        <p>
+          <strong>Total Cash in Hand:</strong> ₹<span id="rFinalCash"></span>
+        </p>
+        <button id="downloadReportBtn" onclick="downloadReport()">
+          ⬇️ Download Report
+        </button>
+      </div>
+    </div>
+
+    <!-- jsPDF and autoTable Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Your Logic -->
+    <script src="step2.js"></script>
+  </body>
+</html>

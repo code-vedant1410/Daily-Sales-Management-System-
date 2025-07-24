@@ -1,0 +1,310 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Ensure html/body fill viewport */
+html, body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+/* ✨ Background: gradient + image + pattern */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #2c2c2c;
+  line-height: 1.6;
+
+  /* Main background image with gradient overlay */
+  background:
+    linear-gradient(135deg, rgba(243,231,255,0.85) 0%, rgba(224,247,250,0.85) 100%),
+    url('bg.jpg') center center / cover no-repeat fixed;
+  position: relative;
+}
+
+/* Fixed pattern layer */
+body::before {
+  content: "";
+  position: fixed; /* pattern layer fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 10px 10px, rgba(156,39,176,0.05) 1px, transparent 0),
+    radial-gradient(circle at 30px 30px, rgba(0,150,136,0.05) 1px, transparent 0);
+  background-size: 50px 50px, 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ✨ Centered container with glass feel */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 850px;
+  margin: 40px auto;
+  background: rgba(255, 255, 255, 0.97);
+  padding: 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+.container:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Headings */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6a1b9a; /* deep purple */
+  margin-bottom: 1rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #00796b; /* teal */
+  margin: 1.5rem 0 0.8rem;
+  text-align: center;
+}
+
+/* Form Row */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+input[type="text"],
+input[type="number"] {
+  flex: 1;
+  min-width: 180px;
+  padding: 12px 14px;
+  border: 1px solid #b39ddb;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  background: #faf7ff;
+}
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: #ab47bc;
+  box-shadow: 0 0 6px rgba(171, 71, 188, 0.4);
+  outline: none;
+}
+
+/* Buttons */
+button,
+a.next {
+  padding: 12px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+/* Add Sale */
+button#addBtn {
+  background: linear-gradient(90deg, #8e24aa, #ab47bc);
+  color: #fff;
+}
+button#addBtn:hover {
+  background: linear-gradient(90deg, #ab47bc, #6a1b9a);
+  box-shadow: 0 4px 12px rgba(142, 36, 170, 0.4);
+  transform: translateY(-1px);
+}
+
+/* All Sales Done */
+button#doneBtn {
+  background: linear-gradient(90deg, #009688, #26a69a);
+  color: #fff;
+}
+button#doneBtn:hover {
+  background: linear-gradient(90deg, #26a69a, #00796b);
+  box-shadow: 0 4px 12px rgba(0, 150, 136, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Next Step */
+a.next,
+button#nextBtn {
+  background: linear-gradient(90deg, #ec407a, #d81b60);
+  color: #fff;
+  text-decoration: none;
+}
+a.next:hover,
+button#nextBtn:hover {
+  background: linear-gradient(90deg, #d81b60, #ad1457);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Generate Report */
+#generateBtn {
+  background: linear-gradient(90deg, #7b1fa2, #8e24aa);
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 22px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#generateBtn:hover {
+  background: linear-gradient(90deg, #8e24aa, #6a1b9a);
+  box-shadow: 0 4px 12px rgba(123, 31, 162, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Download Report */
+#downloadReportBtn {
+  background: linear-gradient(90deg, #26a69a, #009688);
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 22px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+#downloadReportBtn:hover {
+  background: linear-gradient(90deg, #009688, #004d40);
+  box-shadow: 0 4px 12px rgba(0, 150, 136, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #ddd;
+}
+thead th {
+  background: #7b1fa2;
+  color: #fff;
+  padding: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+tbody td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eaeaea;
+}
+tbody tr:nth-child(even) {
+  background: #f3e5f5;
+}
+tbody tr:hover {
+  background: #ede7f6;
+}
+tfoot td {
+  padding: 12px;
+  font-weight: 700;
+  background: #ede7f6;
+  color: #000;
+}
+
+/* Item cell delete icon */
+.item-cell {
+  position: relative;
+  text-align: left;
+  padding-left: 16px;
+}
+.item-cell .delete-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.item-cell .delete-icon:hover {
+  color: #d32f2f;
+  transform: translateY(-50%) scale(1.2);
+}
+
+/* Report Section */
+.report {
+  background: #fce4ec;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+  border-left: 6px solid #ec407a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.report p {
+  font-size: 16px;
+  margin: 6px 0;
+  font-weight: 500;
+}
+.report strong {
+  font-weight: 700;
+  color: #6a1b9a;
+}
+.report-footer {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  table {
+    font-size: 14px;
+  }
+}
+
+/* Extra spacing for plus money input if needed */
+#plusMoneyInput {
+  flex: 1;
+  min-width: 180px;
+  padding: 12px 14px;
+  border: 1px solid #b39ddb;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  background: #faf7ff;
+}
+#plusMoneyInput:focus {
+  border-color: #ab47bc;
+  box-shadow: 0 0 6px rgba(171, 71, 188, 0.4);
+  outline: none;
+}
+
+/* Optional: emphasize Plus Money in the report */
+#rPlusMoney {
+  color: #d81b60; /* pinkish to differentiate */
+  font-weight: 700;
+}

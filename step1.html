@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step 1 - Add Sales</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Step 1: Add Each Sale</h1>
+
+      <div class="form-row">
+        <input type="text" id="itemInput" placeholder="Item Name" />
+        <input type="number" id="amountInput" placeholder="Sale Amount ₹" />
+        <button id="addBtn">➕ Add Sale</button>
+      </div>
+
+      <table id="salesTable">
+        <thead>
+          <tr>
+            <th>Sr No</th>
+            <th>Item Name</th>
+            <th>Sale Amount ₹</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be added dynamically -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">Total</td>
+            <td id="salesTotal">0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="form-row">
+        <button id="doneBtn" class="done">✅ All Sales Done</button>
+        <a href="step2.html" id="nextBtn" class="next">➡️ Next Step</a>
+      </div>
+    </div>
+
+    <script src="step1.js"></script>
+  </body>
+</html>

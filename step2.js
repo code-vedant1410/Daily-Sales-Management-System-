@@ -1,0 +1,166 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const upiInput = document.getElementById("upiInput");
+  const openingInput = document.getElementById("openingInput");
+  const plusMoneyInput = document.getElementById("plusMoneyInput"); // ✅ new
+  const generateBtn = document.getElementById("generateBtn");
+
+  const salesSection = document.getElementById("salesSection");
+  const salesTableBody = document.querySelector("#salesTable tbody");
+  const salesTotalCell = document.getElementById("salesTotal");
+
+  const reportSection = document.getElementById("report");
+  const rTotal = document.getElementById("rTotal");
+  const rUpi = document.getElementById("rUpi");
+  const rCash = document.getElementById("rCash");
+  const rOpening = document.getElementById("rOpening");
+  const rPlusMoney = document.getElementById("rPlusMoney"); // ✅ new
+  const rFinalCash = document.getElementById("rFinalCash");
+
+  let sales = JSON.parse(localStorage.getItem("salesData") || "[]");
+
+  generateBtn.addEventListener("click", () => {
+    if (sales.length === 0) {
+      alert("⚠️ No sales data found. Please complete Step 1 first.");
+      return;
+    }
+
+    const upi = parseFloat(upiInput.value) || 0;
+    const opening = parseFloat(openingInput.value) || 0;
+    const plusMoney = parseFloat(plusMoneyInput.value) || 0; // ✅ new
+
+    // render sales table
+    salesTableBody.innerHTML = "";
+    let totalSales = 0;
+    sales.forEach((sale, index) => {
+      totalSales += sale.amount;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${sale.name}</td>
+        <td>${sale.amount.toFixed(2)}</td>
+      `;
+      salesTableBody.appendChild(tr);
+    });
+    salesTotalCell.textContent = totalSales.toFixed(2);
+    salesSection.style.display = "block";
+
+    // report calculations
+    const cash = totalSales - upi;
+    const finalCash = cash + opening + plusMoney; // ✅ include plus money
+
+    rTotal.textContent = totalSales.toFixed(2);
+    rUpi.textContent = upi.toFixed(2);
+    rCash.textContent = cash.toFixed(2);
+    rOpening.textContent = opening.toFixed(2);
+    rPlusMoney.textContent = plusMoney.toFixed(2); // ✅ show plus money
+    rFinalCash.textContent = finalCash.toFixed(2);
+
+    reportSection.style.display = "block";
+  });
+});
+
+async function downloadReport() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: "p",
+    unit: "mm",
+    format: "a4",
+  });
+
+  // === TITLE ===
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(22);
+  doc.text("Daily Sales Report", 14, 20);
+
+  // === DATE ===
+  const today = new Date();
+  const dateString = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Date: ${dateString}`, 14, 28);
+
+  // === SALES DATA ===
+  const sales = JSON.parse(localStorage.getItem("salesData") || "[]");
+  const salesRows = sales.map((sale, idx) => [
+    idx + 1,
+    sale.name,
+    `INR ${sale.amount.toFixed(2)}`,
+  ]);
+
+  doc.autoTable({
+    startY: 35,
+    head: [["Sr No", "Item Name", "Sale Amount"]],
+    body: salesRows,
+    theme: "grid",
+    headStyles: {
+      fillColor: [40, 53, 147],
+      textColor: 255,
+      fontStyle: "bold",
+    },
+    styles: {
+      font: "helvetica",
+      fontSize: 11,
+      lineColor: [200, 200, 200],
+      halign: "center",
+      valign: "middle",
+    },
+    columnStyles: {
+      0: { cellWidth: 20 },
+      1: { cellWidth: 100, halign: "left" },
+      2: { cellWidth: 50, halign: "right" },
+    },
+  });
+
+  let finalY = doc.lastAutoTable.finalY + 10;
+
+  // === REPORT SUMMARY VALUES ===
+  const rTotal = document.getElementById("rTotal").textContent;
+  const rUpi = document.getElementById("rUpi").textContent;
+  const rCash = document.getElementById("rCash").textContent;
+  const rOpening = document.getElementById("rOpening").textContent;
+  const rPlusMoney = document.getElementById("rPlusMoney").textContent; // ✅ new
+  const rFinalCash = document.getElementById("rFinalCash").textContent;
+
+  // === REPORT SUMMARY ===
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(14);
+  doc.text("Report Summary", 14, finalY);
+  finalY += 8;
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(12);
+
+  const labelX = 18;
+  const valueX = 160;
+
+  const summaryLines = [
+    ["Total Sales:", `INR ${rTotal}`],
+    ["UPI:", `INR ${rUpi}`],
+    ["Cash:", `INR ${rCash}`],
+    ["Opening Balance:", `INR ${rOpening}`],
+    ["Plus Money:", `INR ${rPlusMoney}`], // ✅ new
+    ["Total Cash in Hand:", `INR ${rFinalCash}`],
+  ];
+
+  summaryLines.forEach(([label, value]) => {
+    doc.text(label, labelX, finalY);
+    doc.text(value, valueX, finalY, { align: "right" });
+    finalY += 7;
+  });
+
+  // === FOOTER ===
+  doc.setFontSize(9);
+  doc.setTextColor(150);
+  doc.text("Generated by Daily Sales Management System", 14, finalY + 10);
+
+  // === SAVE PDF ===
+  doc.save(
+    `Sales_Report_${today.getDate()}_${today.getMonth() + 1}_${today.getFullYear()}.pdf`
+  );
+
+  // === REDIRECT AFTER 3 SECONDS ===
+  setTimeout(() => {
+    localStorage.removeItem("salesData");
+    window.location.href = "step1.html";
+  }, 3000);
+}
