@@ -41,11 +41,6 @@ A simple two‑step web application to manage daily sales, track cash and UPI co
 
 ---
 
-## 📷 Screenshots
-
-*(Add screenshots here from your `/assets` folder)*
-
----
 
 ## 🚀 Getting Started
 
